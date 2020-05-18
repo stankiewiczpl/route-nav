@@ -1,7 +1,7 @@
 @foreach($links as $link)
     <div class="col-6 col-sm-6 col-md-4 mb-4">
         <div class="tiles d-flex bg-inverse rounded-lg border-0 p-1 p-md-3  ">
-            <div class="d-flex flex-wrap w-100 p-2 pl-md-4">
+            <div class="d-flex flex-wrap w-100 p-2">
                 <div class="align-self-start w-100 d-flex justify-content-between">
                     @if ($link->icon)
                         <i class="{{$link->icon}} fa-2x px-2 py-1 color-inverse-white-green invisible"></i>

@@ -5,6 +5,7 @@ namespace Stankiewiczpl\RouteNav;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
 
 class RouteNavManager
@@ -60,7 +61,7 @@ class RouteNavManager
     public function cascadeMenu(string $menu)
     {
         $links = $this->cascadeMenuGenerator->generate($menu);
-        $html =  view('route-nav::menu.cascade-menu', compact('links'))->render();
+        $html = view('route-nav::menu.cascade-menu', compact('links'))->render();
         return new HtmlString($html);
     }
 
@@ -71,8 +72,27 @@ class RouteNavManager
      */
     public function breadcrumbs(string $view)
     {
-        $crumbs = $this->breadcrumbsGenerator->generate($this->router->current());
-        $html =  view($view, compact('crumbs'))->render();
+        $links = $this->breadcrumbsGenerator->generate($this->router->current());
+        $html = view($view, compact('links'))->render();
         return new HtmlString($html);
+    }
+
+    /**
+     * @return null
+     */
+    public function getParentRoute()
+    {
+        $current_route = Route::current()->getName();
+        $parts = explode('.', $current_route);
+        array_pop($parts);
+        $compiled = implode('.', $parts);
+        $parent_route = collect(\Route::getRoutes())->filter(function (\Illuminate\Routing\Route $route) use ($compiled) {
+            return $route->getName() === $compiled && !$route->hasParameters();
+        })->first();
+        if ($parent_route) {
+            return $parent_route->getName();
+        }
+
+        return null;
     }
 }

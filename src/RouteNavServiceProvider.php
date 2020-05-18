@@ -27,5 +27,11 @@ class RouteNavServiceProvider extends ServiceProvider
                 return $this;
             });
         }
+        if (!Route::hasMacro('title')) {
+            Route::macro('title', function ($title) {
+                $this->action['title'] = $title;
+                return $this;
+            });
+        }
     }
 }

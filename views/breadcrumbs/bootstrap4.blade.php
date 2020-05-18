@@ -1,20 +1,20 @@
-@if (count($crumbs))
+@if (count($links ?? ''))
     <ol class="breadcrumb">
-        @foreach ($crumbs as $crumb)
+        @foreach ($links as $link)
 
-            @if ($crumb->url && !$loop->last)
+            @if ($link->url && !$loop->last)
                 <li class="breadcrumb-item">
-                    <a href="{{ url($crumb->url) }}">{{ $crumb->title }}
-                        @isset($crumb->icon )
-                            <i class="{{$crumb->icon}}"></i>
+                    <a href="{{ url($link->url) }}"> @lang($link->title)
+                        @isset($link->icon )
+                            <i class="{{$link->icon}}"></i>
                         @endisset
                     </a>
                 </li>
             @else
                 <li class="breadcrumb-item active">
-                    {{ $crumb->title }}
-                    @isset($crumb->icon )
-                        <i class="{{$crumb->icon}}"></i>
+                    @lang($link->title)
+                    @isset($link->icon )
+                        <i class="{{$link->icon}}"></i>
                     @endisset
                 </li>
             @endif

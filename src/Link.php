@@ -45,6 +45,6 @@ class Link
      */
     private function resolveTitle(): string
     {
-        return str_replace('.', ' ', $this->route->getName());
+        return $this->route->getAction('title') ?? str_replace('.', ' ', $this->route->getName());
     }
 }
